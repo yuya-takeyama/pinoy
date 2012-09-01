@@ -32,7 +32,7 @@ Usage
 ```php
 <?php
 // Setting minimum level
-$logger = new Pinoy_Logger::(Pinoy_Logger::LEVEL_WARN);
+$logger = new Pinoy_Logger(Pinoy_Logger::LEVEL_WARN);
 
 // Every logging uses this writer
 $logger['**'] = new Pinoy_Writer_TextFileLogger('./logfile');
