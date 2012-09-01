@@ -109,6 +109,36 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $this->assertSame($fooWriter, $logger->findWriterByTag('foo'));
     }
 
+    /**
+     * @test
+     */
+    public function debug_should_call_writer_if_logging_level_is_debug()
+    {
+        $logger = new Pinoy_Logger(Pinoy::LEVEL_DEBUG);
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->once())->method('write');
+
+        $logger['*'] = $writer;
+
+        $logger->debug('foo');
+    }
+
+    /**
+     * @test
+     */
+    public function debug_should_not_call_writer_if_logging_level_is_info()
+    {
+        $logger = new Pinoy_Logger(Pinoy::LEVEL_INFO);
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->never())->method('write');
+
+        $logger['*'] = $writer;
+
+        $logger->debug('foo');
+    }
+
     private function createLogger()
     {
         return new Pinoy_Logger(Pinoy::LEVEL_DEBUG, self::TAG_DEFAULT);

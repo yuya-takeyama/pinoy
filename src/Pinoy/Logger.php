@@ -90,9 +90,9 @@ class Pinoy_Logger implements ArrayAccess
                     $tracePos += (int) $options['trace_pos'];
                 }
 
-                $trace    = $trace[$tracePos];
+                $trace    = $traces[$tracePos];
 
-                $writer->write($level, $tag, $message, $options, $trace, $tracePos, $allTraces);
+                $writer->write($level, $tag, $message, $options, $trace, $tracePos, $traces);
             }
         }
     }
