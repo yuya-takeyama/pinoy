@@ -102,7 +102,7 @@ class Pinoy_Logger implements ArrayAccess
 
                 $trace = $traces[$tracePos];
 
-                $writer->write($level, $tag, $message, $options, $trace, $tracePos, $traces);
+                $writer->write(new DateTime, $level, $tag, $message, $options, $trace, $tracePos, $traces);
             }
         }
     }

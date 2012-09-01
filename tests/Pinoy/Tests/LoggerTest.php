@@ -43,7 +43,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $writer = $this->createWriterMock();
         $writer->expects($this->once())
             ->method('write')
-            ->with(Pinoy::LEVEL_DEBUG, 'default_tag', 'message', array('foo' => 'bar'));
+            ->with(new DateTime, Pinoy::LEVEL_DEBUG, 'default_tag', 'message', array('foo' => 'bar'));
 
         $logger['*'] = $writer;
 
@@ -140,7 +140,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $writer = $this->createWriterMock();
         $writer->expects($this->once())
             ->method('write')
-            ->with(Pinoy::LEVEL_FATAL, 'foo_tag', 'fatal error');
+            ->with(new DateTime, Pinoy::LEVEL_FATAL, 'foo_tag', 'fatal error');
 
         $logger['foo_tag'] = $writer;
 

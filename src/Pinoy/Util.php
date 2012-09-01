@@ -15,6 +15,14 @@
  */
 class Pinoy_Util
 {
+    private static $levels = array(
+        Pinoy::LEVEL_DEBUG => 'DEBUG',
+        Pinoy::LEVEL_INFO  => 'INFO',
+        Pinoy::LEVEL_WARN  => 'WARN',
+        Pinoy::LEVEL_ERROR => 'ERROR',
+        Pinoy::LEVEL_FATAL => 'FATAL',
+    );
+
     public static function parseArgs($args, $defaultTag)
     {
         $argCount = count($args);
@@ -40,5 +48,10 @@ class Pinoy_Util
         $pattern = '/^' . $pattern . '$/';
 
         return preg_match($pattern, $tag) === 1;
+    }
+
+    public static function getLevelAsString($level)
+    {
+        return self::$levels[$level];
     }
 }
