@@ -117,6 +117,39 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function specified_tag_should_be_logged_if_specified_and_matched()
+    {
+        $logger = $this->createLogger();
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->once())
+            ->method('write')
+            ->with(new DateTime, Pinoy::LEVEL_ERROR, 'another.tag', 'error message');
+
+        $logger['**'] = $writer;
+
+        $logger->error('another.tag', 'error message');
+    }
+
+    /**
+     * @test
+     */
+    public function writer_should_not_be_called_if_not_tag_matched()
+    {
+        $logger = $this->createLogger();
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->never())
+            ->method('write');
+
+        $logger['foo'] = $writer;
+
+        $logger->error('bar', 'error message');
+    }
+
+    /**
+     * @test
+     */
     public function offsetGet_should_create_clone_of_the_logger()
     {
         $logger = $this->createLogger();
