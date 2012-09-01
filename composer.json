@@ -1,0 +1,12 @@
+{
+    "name": "pinoy/pinoy",
+    "description": "Taggable logger for PHP",
+    "keywords": ["logger"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "autoload": {
+        "psr-0": { "Pinoy": "src" }
+    }
+}
