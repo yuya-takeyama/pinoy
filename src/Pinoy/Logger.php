@@ -61,10 +61,10 @@ class Pinoy_Logger implements ArrayAccess
     public function offsetGet($tag)
     {
         if (!array_key_exists($tag, $this->cachedLoggers)) {
-            $this->cachedLogger[$tag] = new self($this->loggingLevel, $this->defaultTag, $this->writers);
+            $this->cachedLoggers[$tag] = new self($this->loggingLevel, $tag, $this->writers);
         }
 
-        return $this->cachedLogger[$tag];
+        return $this->cachedLoggers[$tag];
     }
 
     public function offsetExists($key)

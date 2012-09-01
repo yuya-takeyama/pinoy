@@ -141,6 +141,52 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $logger->debug('foo');
     }
 
+    /**
+     * @test
+     */
+    public function offsetGet_should_create_clone_of_the_logger()
+    {
+        $logger = $this->createLogger();
+
+        $writer = $this->createWriterMock();
+        $logger['foo_tag'] = $writer;
+
+        $fooLogger = $logger['foo_tag'];
+
+        $this->assertInstanceOf('Pinoy_Logger', $fooLogger);
+        $this->assertNotSame($logger, $fooLogger);
+    }
+
+    /**
+     * @test
+     */
+    public function logger_created_with_offsetGet_is_set_default_tag_as_its_key()
+    {
+        $logger = $this->createLogger();
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->once())
+            ->method('write')
+            ->with(Pinoy::LEVEL_FATAL, 'foo_tag', 'fatal error');
+
+        $logger['foo_tag'] = $writer;
+
+        $logger['foo_tag']->fatal('fatal error');
+    }
+
+    /**
+     * @test
+     */
+    public function logger_created_with_offsetGet_should_be_cached()
+    {
+        $logger = $this->createLogger();
+
+        $fooLoggerA = $logger['foo_tag'];
+        $fooLoggerB = $logger['foo_tag'];
+
+        $this->assertSame($fooLoggerA, $fooLoggerB);
+    }
+
     private function createLogger()
     {
         return new Pinoy_Logger(Pinoy::LEVEL_DEBUG, self::TAG_DEFAULT);
