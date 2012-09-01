@@ -9,8 +9,6 @@
  */
 
 require_once 'Pinoy.php';
-require_once 'Pinoy/Logger.php';
-require_once 'Pinoy/WriterInterface.php';
 
 /**
  * Tests for Pinoy_Logger
@@ -20,39 +18,6 @@ require_once 'Pinoy/WriterInterface.php';
 class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
 {
     const TAG_DEFAULT = 'default';
-
-    /**
-     * @test
-     * @dataProvider provideInputAndExpectedOutputForParseArgs
-     */
-    public function parseArgs_should_parse_args_correctly($input, $expected)
-    {
-        $logger = $this->createLogger();
-
-        $this->assertEquals($expected, $logger->parseArgs($input));
-    }
-
-    public function provideInputAndExpectedOutputForParseArgs()
-    {
-        return array(
-            array(
-                array('MESSAGE'),
-                array(self::TAG_DEFAULT, 'MESSAGE', array()),
-            ),
-            array(
-                array('TAG', 'MESSAGE'),
-                array('TAG', 'MESSAGE', array()),
-            ),
-            array(
-                array('MESSAGE', array('trace_pos' => 1)),
-                array(self::TAG_DEFAULT, 'MESSAGE', array('trace_pos' => 1)),
-            ),
-            array(
-                array('TAG', 'MESSAGE', array('trace_pos' => 1)),
-                array('TAG', 'MESSAGE', array('trace_pos' => 1)),
-            ),
-        );
-    }
 
     /**
      * @test

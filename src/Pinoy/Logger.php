@@ -135,7 +135,7 @@ class Pinoy_Logger implements ArrayAccess
     public function debug()
     {
         $args = func_get_args();
-        list($tag, $message, $options) = $this->parseArgs($args);
+        list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
         return $this->write(Pinoy::LEVEL_DEBUG, $tag, $message, $options);
     }
@@ -143,7 +143,7 @@ class Pinoy_Logger implements ArrayAccess
     public function info()
     {
         $args = func_get_args();
-        list($tag, $message, $options) = $this->parseArgs($args);
+        list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
         return $this->write(Pinoy::LEVEL_INFO, $tag, $message, $options);
     }
@@ -151,7 +151,7 @@ class Pinoy_Logger implements ArrayAccess
     public function warn()
     {
         $args = func_get_args();
-        list($tag, $message, $options) = $this->parseArgs($args);
+        list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
         return $this->write(Pinoy::LEVEL_WARN, $tag, $message, $options);
     }
@@ -159,7 +159,7 @@ class Pinoy_Logger implements ArrayAccess
     public function error()
     {
         $args = func_get_args();
-        list($tag, $message, $options) = $this->parseArgs($args);
+        list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
         return $this->write(Pinoy::LEVEL_ERROR, $tag, $message, $options);
     }
@@ -167,7 +167,7 @@ class Pinoy_Logger implements ArrayAccess
     public function fatal()
     {
         $args = func_get_args();
-        list($tag, $message, $options) = $this->parseArgs($args);
+        list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
         return $this->write(Pinoy::LEVEL_FATAL, $tag, $message, $options);
     }
@@ -185,22 +185,5 @@ class Pinoy_Logger implements ArrayAccess
     public function incrementTracePos($count = 1)
     {
         $this->tracePos += $count;
-    }
-
-    public function parseArgs($args)
-    {
-        $argCount = count($args);
-
-        if ($argCount === 1) {
-            return array($this->defaultTag, $args[0], array());
-        } else if ($argCount === 2) {
-            if (is_array($args[1])) {
-                return array($this->defaultTag, $args[0], $args[1]);
-            } else {
-                return array($args[0], $args[1], array());
-            }
-        } else {
-            return $args;
-        }
     }
 }

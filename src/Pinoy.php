@@ -11,6 +11,7 @@
 require_once dirname(__FILE__) . '/Pinoy/Logger.php';
 require_once dirname(__FILE__) . '/Pinoy/WriterInterface.php';
 require_once dirname(__FILE__) . '/Pinoy/BacktraceFactory.php';
+require_once dirname(__FILE__) . '/Pinoy/Util.php';
 
 class Pinoy
 {
