@@ -113,23 +113,13 @@ class Pinoy_Logger implements ArrayAccess
             return $this->cachedWriters[$tag];
         } else {
             foreach ($this->writers as $pattern => $writer) {
-                if ($this->matchPattern($pattern, $tag)) {
+                if (Pinoy_Util::matchPattern($pattern, $tag)) {
                     $this->cachedWriters[$tag] = $writer;
 
                     return $writer;
                 }
             }
         }
-    }
-
-    public function matchPattern($pattern, $tag)
-    {
-        $pattern = str_replace('.', '\.', $pattern);
-        $pattern = str_replace('**', '[a-zA-Z0-9_\-\.]+', $pattern);
-        $pattern = str_replace('*', '[a-zA-Z0-9_\-]+', $pattern);
-        $pattern = '/^' . $pattern . '$/';
-
-        return preg_match($pattern, $tag) === 1;
     }
 
     public function debug()

@@ -31,4 +31,14 @@ class Pinoy_Util
             return $args;
         }
     }
+
+    public static function matchPattern($pattern, $tag)
+    {
+        $pattern = str_replace('.', '\.', $pattern);
+        $pattern = str_replace('**', '[a-zA-Z0-9_\-\.]+', $pattern);
+        $pattern = str_replace('*', '[a-zA-Z0-9_\-]+', $pattern);
+        $pattern = '/^' . $pattern . '$/';
+
+        return preg_match($pattern, $tag) === 1;
+    }
 }

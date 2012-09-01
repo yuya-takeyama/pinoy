@@ -47,4 +47,41 @@ class Pinoy_Tests_UtilTest extends PHPUnit_Framework_TestCase
             ),
         );
     }
+
+    /**
+     * @test
+     * @dataProvider provideValidPatternAndTag
+     */
+    public function matchPattern_should_be_true_if_matched($pattern, $tag)
+    {
+        $this->assertTrue(Pinoy_Util::matchPattern($pattern, $tag));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidPatternAndTag
+     */
+    public function matchPattern_should_be_false_if_not_matched($pattern, $tag)
+    {
+        $this->assertFalse(Pinoy_Util::matchPattern($pattern, $tag));
+    }
+
+    public function provideValidPatternAndTag()
+    {
+        return array(
+            array('foo', 'foo'),
+            array('*', 'foo'),
+            array('**', 'foo'),
+            array('foo.*.baz', 'foo.bar.baz'),
+        );
+    }
+
+    public function provideInvalidPatternAndTag()
+    {
+        return array(
+            array('foo', 'bar'),
+            array('*', 'foo.bar'),
+            array('foo.*.baz', 'foo.baz'),
+        );
+    }
 }
