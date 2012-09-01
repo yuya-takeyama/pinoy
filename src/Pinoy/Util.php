@@ -16,11 +16,11 @@
 class Pinoy_Util
 {
     private static $levels = array(
-        Pinoy::LEVEL_DEBUG => 'DEBUG',
-        Pinoy::LEVEL_INFO  => 'INFO',
-        Pinoy::LEVEL_WARN  => 'WARN',
-        Pinoy::LEVEL_ERROR => 'ERROR',
-        Pinoy::LEVEL_FATAL => 'FATAL',
+        Pinoy_Logger::LEVEL_DEBUG => 'DEBUG',
+        Pinoy_Logger::LEVEL_INFO  => 'INFO',
+        Pinoy_Logger::LEVEL_WARN  => 'WARN',
+        Pinoy_Logger::LEVEL_ERROR => 'ERROR',
+        Pinoy_Logger::LEVEL_FATAL => 'FATAL',
     );
 
     public static function parseArgs($args, $defaultTag)

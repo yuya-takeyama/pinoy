@@ -8,8 +8,6 @@
  * file that was distributed with this source code.
  */
 
-require_once 'Pinoy.php';
-
 /**
  * Tests for Pinoy_Logger
  *
@@ -38,12 +36,12 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
      */
     public function debug_should_call_writer_if_logging_level_is_debug()
     {
-        $logger = new Pinoy_Logger(Pinoy::LEVEL_DEBUG, 'default_tag');
+        $logger = new Pinoy_Logger(Pinoy_Logger::LEVEL_DEBUG, 'default_tag');
 
         $writer = $this->createWriterMock();
         $writer->expects($this->once())
             ->method('write')
-            ->with(new DateTime, Pinoy::LEVEL_DEBUG, 'default_tag', 'message', array('foo' => 'bar'));
+            ->with(new DateTime, Pinoy_Logger::LEVEL_DEBUG, 'default_tag', 'message', array('foo' => 'bar'));
 
         $logger['*'] = $writer;
 
@@ -55,7 +53,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
      */
     public function debug_should_not_call_writer_if_logging_level_is_info()
     {
-        $logger = new Pinoy_Logger(Pinoy::LEVEL_INFO);
+        $logger = new Pinoy_Logger(Pinoy_Logger::LEVEL_INFO);
 
         $writer = $this->createWriterMock();
         $writer->expects($this->never())->method('write');
@@ -84,8 +82,8 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
     public function provideLevelNeedsLoggingForInfo()
     {
         return array(
-            array(Pinoy::LEVEL_DEBUG),
-            array(Pinoy::LEVEL_INFO),
+            array(Pinoy_Logger::LEVEL_DEBUG),
+            array(Pinoy_Logger::LEVEL_INFO),
         );
     }
 
@@ -108,9 +106,9 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
     public function provideLevelNotNeedsLoggingForInfo()
     {
         return array(
-            array(Pinoy::LEVEL_WARN),
-            array(Pinoy::LEVEL_ERROR),
-            array(Pinoy::LEVEL_FATAL),
+            array(Pinoy_Logger::LEVEL_WARN),
+            array(Pinoy_Logger::LEVEL_ERROR),
+            array(Pinoy_Logger::LEVEL_FATAL),
         );
     }
 
@@ -124,7 +122,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $writer = $this->createWriterMock();
         $writer->expects($this->once())
             ->method('write')
-            ->with(new DateTime, Pinoy::LEVEL_ERROR, 'another.tag', 'error message');
+            ->with(new DateTime, Pinoy_Logger::LEVEL_ERROR, 'another.tag', 'error message');
 
         $logger['**'] = $writer;
 
@@ -173,7 +171,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
         $writer = $this->createWriterMock();
         $writer->expects($this->once())
             ->method('write')
-            ->with(new DateTime, Pinoy::LEVEL_FATAL, 'foo_tag', 'fatal error');
+            ->with(new DateTime, Pinoy_Logger::LEVEL_FATAL, 'foo_tag', 'fatal error');
 
         $logger['foo_tag'] = $writer;
 
@@ -195,7 +193,7 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
 
     private function createLogger()
     {
-        return new Pinoy_Logger(Pinoy::LEVEL_DEBUG, self::TAG_DEFAULT);
+        return new Pinoy_Logger(Pinoy_Logger::LEVEL_DEBUG, self::TAG_DEFAULT);
     }
 
     public function createWriterMock()

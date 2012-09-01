@@ -15,6 +15,12 @@
  */
 class Pinoy_Logger implements ArrayAccess
 {
+    const LEVEL_DEBUG   = 0;
+    const LEVEL_INFO    = 1;
+    const LEVEL_WARN    = 2;
+    const LEVEL_ERROR   = 3;
+    const LEVEL_FATAL   = 4;
+
     const DEFAULT_TRACE_POS = 2;
 
     /**
@@ -51,7 +57,7 @@ class Pinoy_Logger implements ArrayAccess
      * @param int $level
      * @param Pinoy_WriterInterface $defaultWriter
      */
-    public function __construct($loggingLevel = Pinoy::LEVEL_DEBUG, $defaultTag = 'default', array $writers = array(), Pinoy_BacktraceFactory $backtraceFactory = null)
+    public function __construct($loggingLevel = self::LEVEL_DEBUG, $defaultTag = 'default', array $writers = array(), Pinoy_BacktraceFactory $backtraceFactory = null)
     {
         if (is_null($backtraceFactory)) {
             $backtraceFactory = new Pinoy_BacktraceFactory;
@@ -127,7 +133,7 @@ class Pinoy_Logger implements ArrayAccess
         $args = func_get_args();
         list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
-        return $this->write(Pinoy::LEVEL_DEBUG, $tag, $message, $options);
+        return $this->write(self::LEVEL_DEBUG, $tag, $message, $options);
     }
 
     public function info()
@@ -135,7 +141,7 @@ class Pinoy_Logger implements ArrayAccess
         $args = func_get_args();
         list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
-        return $this->write(Pinoy::LEVEL_INFO, $tag, $message, $options);
+        return $this->write(self::LEVEL_INFO, $tag, $message, $options);
     }
 
     public function warn()
@@ -143,7 +149,7 @@ class Pinoy_Logger implements ArrayAccess
         $args = func_get_args();
         list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
-        return $this->write(Pinoy::LEVEL_WARN, $tag, $message, $options);
+        return $this->write(self::LEVEL_WARN, $tag, $message, $options);
     }
 
     public function error()
@@ -151,7 +157,7 @@ class Pinoy_Logger implements ArrayAccess
         $args = func_get_args();
         list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
-        return $this->write(Pinoy::LEVEL_ERROR, $tag, $message, $options);
+        return $this->write(self::LEVEL_ERROR, $tag, $message, $options);
     }
 
     public function fatal()
@@ -159,7 +165,7 @@ class Pinoy_Logger implements ArrayAccess
         $args = func_get_args();
         list($tag, $message, $options) = Pinoy_Util::parseArgs($args, $this->defaultTag);
 
-        return $this->write(Pinoy::LEVEL_FATAL, $tag, $message, $options);
+        return $this->write(self::LEVEL_FATAL, $tag, $message, $options);
     }
 
     public function getTracePos()
