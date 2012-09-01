@@ -143,6 +143,55 @@ class Pinoy_Tests_LoggerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider provideLevelNeedsLoggingForInfo
+     */
+    public function info_should_call_writer_if_needed($level)
+    {
+        $logger = new Pinoy_Logger($level);
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->once())->method('write');
+
+        $logger['*'] = $writer;
+
+        $logger->info('foo');
+    }
+
+    public function provideLevelNeedsLoggingForInfo()
+    {
+        return array(
+            array(Pinoy::LEVEL_DEBUG),
+            array(Pinoy::LEVEL_INFO),
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider provideLevelNotNeedsLoggingForInfo
+     */
+    public function info_should_call_writer_if_not_needed($level)
+    {
+        $logger = new Pinoy_Logger($level);
+
+        $writer = $this->createWriterMock();
+        $writer->expects($this->never())->method('write');
+
+        $logger['*'] = $writer;
+
+        $logger->info('foo');
+    }
+
+    public function provideLevelNotNeedsLoggingForInfo()
+    {
+        return array(
+            array(Pinoy::LEVEL_WARN),
+            array(Pinoy::LEVEL_ERROR),
+            array(Pinoy::LEVEL_FATAL),
+        );
+    }
+
+    /**
+     * @test
      */
     public function offsetGet_should_create_clone_of_the_logger()
     {
