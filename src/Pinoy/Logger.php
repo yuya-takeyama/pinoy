@@ -15,7 +15,7 @@
  */
 class Pinoy_Logger implements ArrayAccess
 {
-    const DEFAULT_TRACE_POS = 2;
+    const DEFAULT_TRACE_POS = 1;
 
     /**
      * @var int
@@ -90,7 +90,7 @@ class Pinoy_Logger implements ArrayAccess
                     $tracePos += (int) $options['trace_pos'];
                 }
 
-                $trace    = $traces[$tracePos];
+                $trace = $traces[$tracePos];
 
                 $writer->write($level, $tag, $message, $options, $trace, $tracePos, $traces);
             }
