@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+require_once dirname(__FILE__) . '/BacktraceFactory.php';
+
 /**
  * Facade object of Pinoy.
  *
@@ -15,7 +17,7 @@
  */
 class Pinoy_Logger implements ArrayAccess
 {
-    const DEFAULT_TRACE_POS = 1;
+    const DEFAULT_TRACE_POS = 2;
 
     /**
      * @var int
@@ -33,6 +35,11 @@ class Pinoy_Logger implements ArrayAccess
     private $writers;
 
     /**
+     * @var Pinoy_BacktraceFactory
+     */
+    private $backtraceFactory;
+
+    /**
      * @var array<Pinoy_WriterInterface>
      */
     private $cachedWriters = array();
@@ -46,11 +53,16 @@ class Pinoy_Logger implements ArrayAccess
      * @param int $level
      * @param Pinoy_WriterInterface $defaultWriter
      */
-    public function __construct($loggingLevel = Pinoy::LEVEL_DEBUG, $defaultTag = 'default', array $writers = array())
+    public function __construct($loggingLevel = Pinoy::LEVEL_DEBUG, $defaultTag = 'default', array $writers = array(), Pinoy_BacktraceFactory $backtraceFactory = null)
     {
-        $this->loggingLevel = $loggingLevel;
-        $this->defaultTag   = $defaultTag;
-        $this->writers      = $writers;
+        if (is_null($backtraceFactory)) {
+            $backtraceFactory = new Pinoy_BacktraceFactory;
+        }
+
+        $this->loggingLevel     = $loggingLevel;
+        $this->defaultTag       = $defaultTag;
+        $this->writers          = $writers;
+        $this->backtraceFactory = $backtraceFactory;
     }
 
     public function offsetSet($tagPattern, $writer)
@@ -83,7 +95,7 @@ class Pinoy_Logger implements ArrayAccess
             $writer = $this->findWriterByTag($tag);
 
             if ($writer) {
-                $traces   = debug_backtrace();
+                $traces   = $this->backtraceFactory->create();
                 $tracePos = $this->getTracePos();
 
                 if (array_key_exists('trace_pos', $options)) {
