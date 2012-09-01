@@ -10,6 +10,20 @@ Features
 * Logging backtraces
 * Multiple writers
 
+Installation
+------------
+
+Pinoy can be insstalled using [Composer](http://getcomposer.org/).
+
+```json
+{
+    "minimum-stability": "dev",
+    "require": {
+        "pinoy/pinoy": "*"
+    }
+}
+```
+
 Usage
 -----
 
