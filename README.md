@@ -86,6 +86,30 @@ function executeQueryWithMeaningfullLogging($sql) {
 }
 ```
 
+### Specific writer per tag
+
+Writer is selected using Pattern Match.  
+So the order of pattern/writer specification is important.
+
+If you specify writer with `**` at first, all of logging uses its writer.
+
+```php
+<?php
+$logger['foo.**'] = new Pinoy_Writer_TextFileLogger('./foo.log');
+$logger['bar.*']  = new Pinoy_Writer_TextFileLogger('./bar.log');
+$logger['**']     = new Pinoy_Writer_TextFileLogger('./default.log');
+
+$logger->info('foo.bar', 'This message is logged into foo.log');
+$logger->info('foo.baz', 'This message is also logged into foo.log');
+
+$logger->info('bar.foo', 'This message is logged into bar.log');
+$logger->info('bar.foo.foobar', 'This message is logged into NOT bar.log but default.log');
+
+$logger->info('This message is logged into default.log');
+$logger->info('baz', 'This message is also logged into default.log');
+$logger->info('baz.foobar', 'This message is also logged into default.log');
+```
+
 Author
 ------
 
