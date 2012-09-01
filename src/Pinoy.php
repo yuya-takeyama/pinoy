@@ -8,6 +8,10 @@
  * file that was distributed with this source code.
  */
 
+require_once dirname(__FILE__) . '/Pinoy/Logger.php';
+require_once dirname(__FILE__) . '/Pinoy/WriterInterface.php';
+require_once dirname(__FILE__) . '/Pinoy/BacktraceFactory.php';
+
 class Pinoy
 {
     const VERSION = '0.0.0-dev';
