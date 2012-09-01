@@ -8,6 +8,11 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * Text file writer
+ *
+ * @author Yuya Takeyama
+ */
 class Pinoy_Writer_TextFileWriter
 {
     protected $file;
